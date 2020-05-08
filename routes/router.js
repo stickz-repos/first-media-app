@@ -1,7 +1,8 @@
 const router = require("express").Router();
 
-//category model
-const Category = require("../models/model");
+//category + joke model
+const Category = require("../models/model").category;
+const Joke = require("../models/model").joke;
 
 //GET /api/category : Gets all categories
 router.get("/", (req, res) => {
@@ -25,10 +26,25 @@ router.post("/new", (req, res) => {
     .catch((err) => console.log(err));
 });
 
-router.delete("/remove/:id", (req, res) => {
-  Category.findByIdAndDelete(req.params.id)
-    .then((item) => res.json(item))
+router.get("/:id", (req, res) => {
+  Category.findById(req.params.id)
+    .then((category) => res.json(category))
     .catch((err) => console.log(err));
+});
+
+router.delete("/:id/remove", (req, res) => {
+  Category.findByIdAndDelete(req.params.id)
+    .then((category) => res.json(category))
+    .catch((err) => console.log(err));
+});
+
+router.post("/:id/joke/new", (req, res) => {
+  const newJoke = new Joke({
+    user: req.body.user,
+    text: req.body.text,
+  });
+  console.log(newJoke);
+  console.log(Category.findById(req.params.id));
 });
 
 module.exports = router;

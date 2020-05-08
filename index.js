@@ -6,7 +6,7 @@ const app = new Express();
 
 //imports
 const db = require("./config/keys");
-const categoryRouter = require("./routes/categoryRouter");
+const categoryRouter = require("./routes/router");
 
 //variables
 const port = process.env.PORT || 3000;
@@ -17,7 +17,11 @@ app.use("/api/category", categoryRouter);
 
 //mongoDB
 mongoose
-  .connect(db.mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(db.mongoURI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+  })
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.log(err));
 

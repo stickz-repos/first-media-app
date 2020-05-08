@@ -3,8 +3,8 @@ const Schema = mongoose.Schema;
 
 // Joke Schema
 const jokeSchema = new Schema({
-  user: { type: String , required: true},
-  joke: { type: String, required: true, maxlength: 100 },
+  user: { type: String, required: true },
+  text: { type: String, required: true, maxlength: 100 },
 });
 
 // Category Schema
@@ -15,5 +15,6 @@ const categorySchema = new Schema({
   jokes: [jokeSchema],
 });
 
-module.exports = mongoose.model("category", categorySchema);
-module.exports = mongoose.model("joke", jokeSchema);
+module.exports = {};
+module.exports.category = mongoose.model("category", categorySchema);
+module.exports.joke = mongoose.model("joke", jokeSchema);
