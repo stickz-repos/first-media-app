@@ -39,12 +39,18 @@ router.delete("/:id/remove", (req, res) => {
 });
 
 router.post("/:id/joke/new", (req, res) => {
-  const newJoke = new Joke({
-    user: req.body.user,
-    text: req.body.text,
-  });
-  console.log(newJoke);
-  console.log(Category.findById(req.params.id));
+  Category.findByIdAndUpdate(
+    req.params.id,
+    { $push: { jokes: { user: req.body.user, text: req.body.text } } },
+    { safe: true, new: true },
+    (err, model) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.json(model);
+      }
+    }
+  );
 });
 
 module.exports = router;
